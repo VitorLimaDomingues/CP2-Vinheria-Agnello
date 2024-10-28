@@ -91,6 +91,8 @@ Este projeto pode ser adaptado para monitorar e ajustar parâmetros ambientais e
 
 ## Autores
 
+Stack Society
+
 - Vitor de Lima Domingues.
 - Giovanni Romano Provazi.
 - João Pedro Vieira de Morais.

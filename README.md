@@ -76,6 +76,10 @@ O código é dividido em várias seções principais:
 5. **Funções de Status:**
    - Funções para determinar e retornar o status da umidade, temperatura e luminosidade.
 
+## Armazenamento em EEPROM
+
+O projeto utiliza a memória EEPROM do Arduino para registrar a data e a hora das leituras de temperatura, umidade e luminosidade. Isso permite que os dados sejam retidos mesmo quando o Arduino é desligado. Os dados podem ser acessados para análise posterior, possibilitando o monitoramento histórico das condições ambientais.
+
 ## Autores
 
 Stack Society

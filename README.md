@@ -9,14 +9,15 @@ Este projeto utiliza um microcontrolador Arduino para monitorar temperatura, umi
 Para compilar e executar este código, você precisará dos seguintes componentes:
 
 - **Hardware:**
-  - Arduino Uno ou equivalente
-  - Sensor DHT22 ou 11 (temperatura e umidade)
-  - Sensor LDR (sensor de luminosidade)
-  - Display LCD 16x2 com interface I2C
-  - Buzzer
-  - LEDs (vermelho, amarelo, verde)
-  - Resistores (para LEDs e LDR)
-  - Fios de conexão
+  - Arduino Uno ou equivalente: Microcontrolador que executa o código e controla todos os componentes.
+  - Sensor DHT22 ou 11: Mede a temperatura e a umidade do ambiente.
+  - Sensor LDR: Mede a luminosidade, permitindo o monitoramento das condições de luz.
+  - Display LCD 16x2 com interface I2C: Exibe as leituras de temperatura, umidade e luminosidade, além de informações sobre alertas.
+  - Buzzer: Emite sinais sonoros para alertar quando os valores ultrapassam limites pré-definidos.
+  - LEDs (vermelho, amarelo, verde): Indicadores visuais que mostram o status das medições (ex: níveis normais ou de alerta).
+  - Resistores 1kΩ (para LEDs e LDR): Limitam a corrente que passa pelos LEDs e ajudam a calibrar o sensor LDR.
+  - Fios de conexão: Usados para conectar todos os componentes eletrônicos entre si.
+  - RTC DS1307 I2C: Mantém a contagem da data e hora, permitindo que as leituras sejam registradas com informações temporais.
 
 - **Software:**
   - Arduino IDE
@@ -35,11 +36,12 @@ Para compilar e executar este código, você precisará dos seguintes componente
    - Pesquise e instale as bibliotecas mencionadas acima.
 
 2. **Conectar os Componentes:**
-   - Conecte o sensor DHT ao pino 3.
+   - Conecte o sensor DHT ao pino 3
    - Conecte o LDR ao pino A0.
    - Conecte os LEDs aos pinos 10 (vermelho), 11 (amarelo) e 12 (verde).
    - Conecte o buzzer ao pino 7.
    - Conecte o display LCD ao barramento I2C.
+   - Conecte o RTC DS1307 ao barramento I2C, garantindo que os pinos SDA e SCL estejam corretamente conectados aos pinos correspondentes no Arduino.
 
 3. **Carregar o Código:**
    - Copie e cole o código fornecido no Arduino IDE.
@@ -79,6 +81,10 @@ O código é dividido em várias seções principais:
 ## Armazenamento em EEPROM
 
 O projeto utiliza a memória EEPROM do Arduino para registrar a data e a hora das leituras de temperatura, umidade e luminosidade. Isso permite que os dados sejam retidos mesmo quando o Arduino é desligado. Os dados podem ser acessados para análise posterior, possibilitando o monitoramento histórico das condições ambientais.
+
+## Link do simulador
+
+Link do simulador do projeto: https://wokwi.com/projects/413043800017889281
 
 ## Autores
 

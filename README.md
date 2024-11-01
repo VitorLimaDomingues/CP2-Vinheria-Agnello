@@ -88,7 +88,7 @@ Link do simulador do projeto: https://wokwi.com/projects/413043800017889281
 
 - Umidade: 0% até 89.50% Ótimo, 90% até 94.50% Alerta, 95% até 100% Crítico. 
 - Temperatura: 0.0°C até 15.0°C Ótimo, 15.1°C até 20.0°C Alerta, 20.1 até 80.0°C Crítico.
-- Luminosidade: 316Lux até 100000Lux Ótimo, 174Lux até 302Lux Alerta, 0.1Lux até 166 Crítico.
+- Luminosidade: 316Lux até 100000Lux Ótimo, 174Lux até 302Lux Alerta, 0.1Lux até 166Lux Crítico.
 
 ## Autores
 

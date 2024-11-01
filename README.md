@@ -1,8 +1,8 @@
 ![CP2 Vinheria Agnello](Vinheria-agnello-cp2.png)
 
-# Monitor de Temperatura, Umidade e Luminosidade
+# Monitor de Temperatura, Umidade e Luminosidade com Registro em EEPROM e Alertas em Tempo Real
 
-Este projeto utiliza um microcontrolador Arduino para monitorar temperatura, umidade e luminosidade em tempo real. Os dados são exibidos em um display LCD e os alertas são acionados através de LEDs e um buzzer quando os valores ultrapassam limites pré-definidos.
+Este projeto utiliza um microcontrolador Arduino para monitorar temperatura, umidade e luminosidade em tempo real, registrando as leituras na memória EEPROM para análise histórica. Os dados são exibidos em um display LCD, e alertas visuais e sonoros são acionados através de LEDs e um buzzer quando os valores ultrapassam limites pré-definidos. A utilização da EEPROM garante que as informações sejam preservadas mesmo após desligamentos, permitindo o acompanhamento contínuo das condições ambientais.
 
 ## Requisitos
 

@@ -90,8 +90,7 @@ void setup() {
     Serial.begin(9600);           // Inicializa a comunicação serial a 9600 bps
     lcd.init();                   // Inicializa o display LCD
     lcd.backlight();              // Liga a luz de fundo do LCD
-    RTC.begin();  
-    RTC.adjust(DateTime(2024, 10, 29, 12, 0, 0));            
+    RTC.begin();            
     delay(1000);              
     EEPROM.begin();               // Inicializa a EEPROM
    
@@ -111,65 +110,52 @@ void loop() {
     float humidity = dht.readHumidity();       // Lê a umidade do sensor DHT
     int rawLuminosity = analogRead(LDRPIN);    // Lê o valor bruto do sensor de luminosidade
     int luminosity = map(rawLuminosity, 0, 1023, 0, 100); // Mapeia o valor para 0-100 %
-    Serial.println(rawLuminosity);
-    // Armazena os valores lidos na EEPROM
-    EEPROM.put(0, temperature);     // Armazena a temperatura na posição 0 da EEPROM
-    EEPROM.put(4, humidity);        // Armazena a umidade na posição 4 da EEPROM
-    EEPROM.put(8, luminosity);      // Armazena a luminosidade na posição 8 da EEPROM
-   
- 
+
+    // Registra a data e hora no monitor serial
+    DateTime now = RTC.now();
+    char buffer[50]; // Buffer para armazenar a string formatada
+
     // Lógica para LED e Buzzer
+    bool alert = false; // Variável para verificar se há alerta
+
     if (temperature > TEMP_MAX || humidity > HUM_MAX || luminosity > LUM_MAX) {
         digitalWrite(RED_LED, HIGH); // Liga o LED vermelho
-        tone(BUZZER_PIN, 1000);// Liga o buzzer
+        tone(BUZZER_PIN, 1000); // Liga o buzzer
         digitalWrite(YELLOW_LED, LOW); // Desliga o LED amarelo
         digitalWrite(GREEN_LED, LOW); // Desliga o LED verde
- 
-        // Registra a data e hora no monitor serial
-        DateTime now = RTC.now();
-        storeDateTime(now);
-        Serial.print("ALERTA! ");
-        Serial.print("Data: ");
-        Serial.print(now.day(), DEC);
-        Serial.print('/');
-        Serial.print(now.month(), DEC);
-        Serial.print('/');
-        Serial.print(now.year(), DEC);
-        Serial.print(" Hora: ");
-        Serial.print(now.hour(), DEC);
-        Serial.print(':');
-        Serial.print(now.minute(), DEC);
-        Serial.print(':');
-        Serial.println(now.second(), DEC);
+        Serial.println("Atenção: Estado crítico!");
+        alert = true; // Define que há alerta
+
     } else if (temperature > TEMP_ALERT || humidity > HUM_ALERT || luminosity > LUM_ALERT) {
         digitalWrite(YELLOW_LED, HIGH); // Liga o LED amarelo
         tone(BUZZER_PIN, 500); // Liga o buzzer
         digitalWrite(GREEN_LED, LOW); // Desliga o LED verde
         digitalWrite(RED_LED, LOW); // Desliga o LED vermelho
- 
-              // Registra a data e hora no monitor serial
-        DateTime now = RTC.now();
-        storeDateTime(now);
-        Serial.print("Atenção! ");
-        Serial.print("Data: ");
-        Serial.print(now.day(), DEC);
-        Serial.print('/');
-        Serial.print(now.month(), DEC);
-        Serial.print('/');
-        Serial.print(now.year(), DEC);
-        Serial.print(" Hora: ");
-        Serial.print(now.hour(), DEC);
-        Serial.print(':');
-        Serial.print(now.minute(), DEC);
-        Serial.print(':');
-        Serial.println(now.second(), DEC);
+        Serial.println("Atenção: Estado de alerta!");
+        alert = true; // Define que há alerta
+
     } else {
         digitalWrite(GREEN_LED, HIGH); // Liga o LED verde
         digitalWrite(YELLOW_LED, LOW); // Desliga o LED amarelo
         digitalWrite(RED_LED, LOW); // Desliga o LED vermelho
         noTone(BUZZER_PIN);  // Para o som no pino do buzzer
     }
- 
+
+    // Se houver alerta, armazena os valores na EEPROM
+    if (alert) {
+        EEPROM.put(0, temperature);     // Armazena a temperatura na posição 0 da EEPROM
+        EEPROM.put(4, humidity);        // Armazena a umidade na posição 4 da EEPROM
+        EEPROM.put(8, luminosity);      // Armazena a luminosidade na posição 8 da EEPROM
+
+        // Armazena a data e hora na EEPROM
+        storeDateTime(now);
+        
+        sprintf(buffer, "Data: %02d/%02d/%04d Hora: %02d:%02d:%02d", 
+        now.day(), now.month(), now.year(), 
+        now.hour(), now.minute(), now.second());
+        Serial.println(buffer);
+    }
+
     // Carrega e posiciona a primeira parte do logo
     loadLogo();                    // Chama a função para carregar os ícones do logo
     lcd.clear();                  // Limpa o display LCD
@@ -244,6 +230,7 @@ void storeDateTime(DateTime now) {
     EEPROM.put(address + 5, now.minute());
     EEPROM.put(address + 6, now.second());
 }
+
  
 // Funções de status
 // Função para determinar o status da umidade e temperatura
